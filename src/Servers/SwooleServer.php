@@ -49,7 +49,7 @@ class SwooleServer extends BaseServer implements ServerInterface
      */
     public function onServerShutdown($serv)
     {
-        @unlink($this->pid_file);
+        @unlink($this->configs['pid_file']);
     }
     
     /**
