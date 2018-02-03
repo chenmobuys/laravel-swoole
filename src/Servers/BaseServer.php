@@ -123,8 +123,6 @@ abstract class BaseServer
                 }
             }
             
-            print_r($illumninate_request);
-            
             $this->events->fire('swoole.requesting', [$illuminate_request]);
 
             $illuminate_response = $kernel->handle($illuminate_request);
@@ -136,6 +134,8 @@ abstract class BaseServer
             }
 
             ob_end_clean();
+            
+            print_r($illuminate_request);
 
         } catch (\Exception $e) {
             echo '[ERR] ' . $e->getFile() . '(' . $e->getLine() . '): ' . $e->getMessage() . PHP_EOL;
