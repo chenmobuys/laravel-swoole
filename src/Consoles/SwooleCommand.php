@@ -73,8 +73,8 @@ class SwooleCommand extends Command
             'wrapper_file' => $wrapper_file,
             'host' => $host,
             'port' => $port,
-            'root_path' => 'D:\\phpStudy\\WWW\\laravel',
-            'environment_path' => 'D:\\phpStudy\\WWW\\laravel',
+            'root_path' => base_path(),
+            'environment_path' => base_path(),
         ];
 
         $handle = popen(PHP_BINARY . ' ' . __DIR__ . '/../Entry.php', 'w');
