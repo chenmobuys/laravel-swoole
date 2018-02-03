@@ -12,9 +12,6 @@ class SwooleServer extends BaseServer implements ServerInterface
      */
     public function start()
     {
-        $this->server = swoole_server(
-            $this->configs['host'],$this->configs['port'],$this->configs['mode'],$this->configs['sock_type']);
-
         $callbacks = array_merge([
             'Start' => [$this, 'onServerStart'],
             'Shutdown' => [$this, 'onServerShutdown'],
