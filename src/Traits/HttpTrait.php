@@ -45,15 +45,31 @@ trait HttpTrait
         } else {
             $content = $illuminateResponse->getContent();
             // check gzip
-//            if ($accept_gzip && isset($response->header['Content-Type'])) {
-//                $mime = $response->header['Content-Type'];
-//
-//                if (strlen($content) > config('laravoole.base_config.gzip_min_length') && is_mime_gzip($mime)) {
-//                    $response->gzip(config('laravoole.base_config.gzip'));
-//                }
-//            }
+            if ($accept_gzip && isset($response->header['Content-Type'])) {
+                $mime = $response->header['Content-Type'];
+
+                if (strlen($content) > 1024 && $this->is_mime_gzip($mime)) {
+                    $response->gzip(5);
+                }
+            }
         }
         return $this->endResponse($response, $content);
+    }
+
+    protected function is_mime_gzip($mime)
+    {
+        static $mimes = [
+            'text/plain' => true,
+            'text/html' => true,
+            'text/css' => true,
+            'application/javascript' => true,
+            'application/json' => true,
+            'application/xml' => true,
+        ];
+        if ($pos = strpos($mime, ';')) {
+            $mime = substr($mime, 0, $pos);
+        }
+        return isset($mimes[strtolower($mime)]);
     }
 
 }
