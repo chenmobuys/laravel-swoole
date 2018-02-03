@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Chenmobuys\\LaravelSwoole": "src/"
+      "Chenmobuys\\LaravelSwoole\\": "src/"
     }
   },
   "extra": {
