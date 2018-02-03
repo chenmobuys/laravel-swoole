@@ -45,13 +45,14 @@ trait HttpTrait
         } else {
             $content = $illuminateResponse->getContent();
             // check gzip
-            if ($accept_gzip && isset($response->header['Content-Type'])) {
-                $mime = $response->header['Content-Type'];
-
-                if (strlen($content) > 1024 && $this->is_mime_gzip($mime)) {
-                    $response->gzip(5);
-                }
-            }
+//            if ($accept_gzip && isset($response->header['Content-Type'])) {
+//                $mime = $response->header['Content-Type'];
+//
+//                if (strlen($content) > 1024 && $this->is_mime_gzip($mime)) {
+                        //方法不存在
+//                    $response->gzip(5);
+//                }
+//            }
         }
         return $this->endResponse($response, $content);
     }
