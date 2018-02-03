@@ -104,7 +104,6 @@ abstract class BaseServer
      */
     public function handleRequest($request, IlluminateRequest $illuminate_request = null)
     {
-        print_r($request->server);
         clearstatcache();
 
         $kernel = $this->kernel;
@@ -134,8 +133,7 @@ abstract class BaseServer
             }
 
             ob_end_clean();
-        
-            print_r($illuminate_request->url());
+            
         } catch (\Exception $e) {
             echo '[ERR] ' . $e->getFile() . '(' . $e->getLine() . '): ' . $e->getMessage() . PHP_EOL;
             echo $e->getTraceAsString() . PHP_EOL;
