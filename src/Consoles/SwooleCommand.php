@@ -75,7 +75,7 @@ class SwooleCommand extends Command
             'port' => $port,
             'root_path' => base_path(),
             'environment_path' => base_path(),
-            'pid_file' => storage_path('/swoole/swoole.pid'),
+            'pid_file' => storage_path('swoole/swoole.pid'),
         ];
 
         $handle = popen(PHP_BINARY . ' ' . __DIR__ . '/../Entry.php', 'w');
@@ -88,10 +88,10 @@ class SwooleCommand extends Command
      */
     protected function getPid()
     {
-        $pid_file = storage_path('/swoole/swoole.pid');
+        $pid_file = storage_path('swoole/swoole.pid');
 
         if (file_exists($pid_file)) {
-            $pid = file_get_contents($pid_file);
+            $pid = (int) file_get_contents($pid_file);
             if (posix_getpgid($pid)) {
                 return $pid;
             } else {
