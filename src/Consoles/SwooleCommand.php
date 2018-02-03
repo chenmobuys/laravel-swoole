@@ -75,6 +75,7 @@ class SwooleCommand extends Command
             'port' => $port,
             'root_path' => base_path(),
             'environment_path' => base_path(),
+            'pid_file' => storage_path('/swoole/swoole.pid'),
         ];
 
         $handle = popen(PHP_BINARY . ' ' . __DIR__ . '/../Entry.php', 'w');
