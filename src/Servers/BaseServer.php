@@ -104,6 +104,7 @@ abstract class BaseServer
      */
     public function handleRequest($request, IlluminateRequest $illuminate_request = null)
     {
+        print_r($request);
         clearstatcache();
 
         $kernel = $this->kernel;
@@ -173,7 +174,6 @@ abstract class BaseServer
      */
     protected function convertRequest($request, $classname = IlluminateRequest::class)
     {
-        print_r($request);
         $get = isset($request->get) ? $request->get : [];
         $post = isset($request->post) ? $request->post : [];
         $cookie = isset($request->cookie) ? $request->cookie : [];
