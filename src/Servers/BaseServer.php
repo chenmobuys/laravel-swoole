@@ -104,7 +104,7 @@ abstract class BaseServer
      */
     public function handleRequest($request, IlluminateRequest $illuminate_request = null)
     {
-        print_r($request);
+        print_r($request->server);
         clearstatcache();
 
         $kernel = $this->kernel;
