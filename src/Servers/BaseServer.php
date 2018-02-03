@@ -66,6 +66,10 @@ abstract class BaseServer
         if(file_exists(__DIR__ . '/../../../../vendor/autoload.php')){
             require __DIR__ . '/../../../../vendor/autoload.php';
         }
+        
+        if(file_exists(__DIR__ . '/../../../vendor/autoload.php')){
+            require __DIR__ . '/../../../vendor/autoload.php';
+        }
 
         foreach ($this->callbacks as $callback) {
             $callback($this);
