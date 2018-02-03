@@ -45,6 +45,14 @@ class SwooleServer extends BaseServer implements ServerInterface
     }
 
     /**
+     * @codeCoverageIgnore
+     */
+    public function onServerShutdown($serv)
+    {
+        @unlink($this->pid_file);
+    }
+    
+    /**
      * event callback
      * @param  string $event start receive shutdown WorkerStart close request
      * @param  callable $callback event handler
