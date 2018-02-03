@@ -122,7 +122,9 @@ abstract class BaseServer
                     $illuminate_request = IlluminateRequest::createFromBase($request);
                 }
             }
-
+            
+            print_r($illumninate_request);
+            
             $this->events->fire('swoole.requesting', [$illuminate_request]);
 
             $illuminate_response = $kernel->handle($illuminate_request);
