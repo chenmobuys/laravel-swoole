@@ -1,0 +1,32 @@
+{
+  "name": "chenmobuys/laravel-swoole",
+  "description": "for Laravel on Swoole",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "swoole"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Chenmobuys",
+      "email": "chenmobuys@gmail.com"
+    }
+  ],
+  "require": {
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Chenmobuys\\LaravelSwoole": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Chenmobuys\\LaravelSwoole\\Providers\\SwooleProvider"
+      ]
+    }
+  }
+}
