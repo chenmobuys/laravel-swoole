@@ -134,9 +134,8 @@ abstract class BaseServer
             }
 
             ob_end_clean();
-            
-            print_r($illuminate_request);
-
+        
+            print_r($illuminate_request->url());
         } catch (\Exception $e) {
             echo '[ERR] ' . $e->getFile() . '(' . $e->getLine() . '): ' . $e->getMessage() . PHP_EOL;
             echo $e->getTraceAsString() . PHP_EOL;
