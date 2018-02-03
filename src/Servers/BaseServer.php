@@ -173,6 +173,7 @@ abstract class BaseServer
      */
     protected function convertRequest($request, $classname = IlluminateRequest::class)
     {
+        print_r($request);
         $get = isset($request->get) ? $request->get : [];
         $post = isset($request->post) ? $request->post : [];
         $cookie = isset($request->cookie) ? $request->cookie : [];
