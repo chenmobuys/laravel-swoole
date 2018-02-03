@@ -39,12 +39,53 @@ class SwooleCommand extends Command
             exit($this->getHelp());
         }
 
-        $this->$action();
+        switch ($action) {
+
+            case 'start':
+                $this->start();
+                break;
+            case 'restart':
+                $pid = $this->sendSignal(SIGTERM);
+                $time = 0;
+                while (posix_getpgid($pid) && $time <= 10) {
+                    usleep(100000);
+                    $time++;
+                }
+                if ($time > 100) {
+                    echo 'timeout' . PHP_EOL;
+                    exit(1);
+                }
+                $this->start();
+                break;
+            case 'stop':
+            case 'quit':
+            case 'reload':
+            case 'reload_task':
+
+                $map = [
+                    'stop' => SIGTERM,
+                    'quit' => SIGQUIT,
+                    'reload' => SIGUSR1,
+                    'reload_task' => SIGUSR2,
+                ];
+                $this->sendSignal($map[$action]);
+                break;
+        }
     }
 
-    protected function isWin()
+    /**
+     * @param $sig
+     */
+    protected function sendSignal($sig)
     {
-        return strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';
+        if ($pid = $this->getPid()) {
+
+            posix_kill($pid, $sig);
+        } else {
+
+            echo "not running!" . PHP_EOL;
+            exit(1);
+        }
     }
 
     protected function start()
