@@ -13,7 +13,7 @@ class HttpServer extends SwooleServer implements ServerInterface
 
     public function start()
     {
-        $this->server = new swoole_http_server($this->configs['host'], $this->configs['port']);
+        $this->server = new swoole_http_server($this->configs['host'], $this->configs['port'], SWOOLE_PROCESS, SWOOLE_KEEP);
 
         if (!empty($this->handler_config)) {
             $this->server->set($this->handler_config);
