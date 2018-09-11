@@ -12,7 +12,9 @@ class SwooleCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'chen:swoole {action : start | stop | reload | reload_task | restart | quit}';
+    protected $signature = 'chen:swoole 
+                            {action : start | stop | reload | reload_task | restart | quit}
+                            {--port=9501 : port}';
 
     /**
      * The console command description.
@@ -96,7 +98,7 @@ class SwooleCommand extends Command
         }
 
         $host = '127.0.0.1';
-        $port = '9501';
+        $port = $this->option('port');
 
         $socket = @stream_socket_server("tcp://{$host}:{$port}");
 
@@ -116,7 +118,7 @@ class SwooleCommand extends Command
             'port' => $port,
             'root_path' => base_path(),
             'environment_path' => base_path(),
-            'pid_file' => storage_path('swoole/swoole.pid'),
+            'pid_file' => storage_path('swoole/swoole_http_'.$port.'.pid'),
         ];
 
         $handle = popen(PHP_BINARY . ' ' . __DIR__ . '/../Entry.php', 'w');
@@ -129,7 +131,7 @@ class SwooleCommand extends Command
      */
     protected function getPid()
     {
-        $pid_file = storage_path('swoole/swoole.pid');
+        $pid_file = storage_path('swoole/swoole_http_'.$this->option('port').'.pid');
 
         if (file_exists($pid_file)) {
             $pid = (int) file_get_contents($pid_file);
