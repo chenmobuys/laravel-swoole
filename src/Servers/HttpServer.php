@@ -4,12 +4,13 @@ namespace Chenmobuys\LaravelSwoole\Servers;
 
 use swoole_http_server;
 use Chenmobuys\LaravelSwoole\Traits\HttpTrait;
+use Chenmobuys\LaravelSwoole\Traits\MimeType;
 use Chenmobuys\LaravelSwoole\Contracts\ServerInterface;
 
 
 class HttpServer extends SwooleServer implements ServerInterface
 {
-    use HttpTrait;
+    use HttpTrait,MimeType;
 
     public function start()
     {
@@ -80,7 +81,7 @@ class HttpServer extends SwooleServer implements ServerInterface
                 $response->status(403);
                 $response->end();
             } else {
-                $response->header('Content-Type', get_mime_type($file));
+                $response->header('Content-Type', static::detectByFilename($file));
                 if (!filesize($file)) {
                     $response->end();
                 } else {
