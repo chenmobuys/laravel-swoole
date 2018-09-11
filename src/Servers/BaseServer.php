@@ -58,7 +58,7 @@ abstract class BaseServer
     {
         $this->configs = $configs;
 
-        $this->prepareStart();
+        //$this->prepareStart();
     }
 
     protected function prepareStart()
