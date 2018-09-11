@@ -38,12 +38,38 @@ class SwooleServer extends BaseServer implements ServerInterface
 
     public function onWorkerStart($serv, $worker_id)
     {
+         //设置代码热更新
+        $this->setReload($serv,$worker_id);
+
         $server = $this->server;
+
+        $this->prepareStart();
+
         $this->app->singleton('chen.server', function ($app) use ($server) {
             return $server;
         });
     }
 
+    protected function setReload($serv,$worker_id)
+    {
+        $dir = base_path();
+        $list[] = $dir;
+        foreach (array_diff(scandir($dir), array('.', '..')) as $item) {
+            $list[] = $dir.'/'.$item;
+        }
+        $notify = inotify_init();
+        foreach ($list as $item) {
+            inotify_add_watch($notify, $item, IN_CREATE | IN_DELETE | IN_MODIFY);
+        }
+        swoole_event_add($notify, function () use ($notify,$serv) {
+            $events = inotify_read($notify);
+            if (!empty($events)) {
+                // 执行swolle reload
+                $serv->reload();
+            }
+        });
+    }
+    
     /**
      * @codeCoverageIgnore
      */
