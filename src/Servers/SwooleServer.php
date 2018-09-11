@@ -52,7 +52,7 @@ class SwooleServer extends BaseServer implements ServerInterface
 
     protected function setReload($serv,$worker_id)
     {
-        $dir = base_path();
+        $dir = realpath($this->configs['root_path']);
         $list[] = $dir;
         foreach (array_diff(scandir($dir), array('.', '..')) as $item) {
             $list[] = $dir.'/'.$item;
