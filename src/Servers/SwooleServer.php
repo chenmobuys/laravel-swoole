@@ -53,16 +53,22 @@ class SwooleServer extends BaseServer implements ServerInterface
     protected function setReload($serv,$worker_id)
     {
         $dir = realpath($this->configs['root_path']);
+
         $list[] = $dir;
+
         foreach (array_diff(scandir($dir), array('.', '..')) as $item) {
             $list[] = $dir.'/'.$item;
         }
+
         $notify = inotify_init();
+
         foreach ($list as $item) {
             inotify_add_watch($notify, $item, IN_CREATE | IN_DELETE | IN_MODIFY);
         }
+
         swoole_event_add($notify, function () use ($notify,$serv) {
             $events = inotify_read($notify);
+
             if (!empty($events)) {
                 // 执行swolle reload
                 $serv->reload();

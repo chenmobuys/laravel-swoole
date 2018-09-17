@@ -16,6 +16,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
 
+use Illuminate\Foundation\Bootstrap\SetRequestForConsole;
+
 abstract class BaseServer
 {
 
@@ -57,8 +59,6 @@ abstract class BaseServer
     public function __construct($configs)
     {
         $this->configs = $configs;
-
-        //$this->prepareStart();
     }
 
     protected function prepareStart()
@@ -71,17 +71,13 @@ abstract class BaseServer
             require __DIR__ . '/../../../vendor/autoload.php';
         }
 
-        foreach ($this->callbacks as $callback) {
-            $callback($this);
-        }
-
         $this->app = $this->getApp();
 
-        $this->kernel = $this->app->make(\Illuminate\Contracts\Http\Kernel::class);
+        $this->kernel = $this->app->make(Kernel::class);
 
         $virus = function () {
             // Insert bofore BootProviders
-            array_splice($this->bootstrappers, -1, 0, [\Illuminate\Foundation\Bootstrap\SetRequestForConsole::class]);
+            array_splice($this->bootstrappers, -1, 0, [SetRequestForConsole::class]);
         };
 
         $virus = \Closure::bind($virus, $this->kernel, $this->kernel);
